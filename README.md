@@ -120,6 +120,30 @@ train: /Users/bupt_absinth/Work/projects/qrcode_detect/data/synthetic/images/syn
 python src/data_generation/generate_test_samples.py
 ```
 
+#### PNG图像ICC配置文件警告
+
+**问题描述**：
+```
+libpng warning: iCCP: profile 'ICC Profile': 'wtpt': ICC profile tag start not a multiple of 4
+libpng warning: iCCP: known incorrect sRGB profile
+```
+
+**问题原因**：
+某些PNG图像包含不正确或损坏的ICC颜色配置文件，这通常是图像编辑软件生成的。
+
+**影响评估**：
+- **无实际影响**：这些警告仅涉及图像的颜色配置文件元数据
+- **不影响训练**：图像数据本身完整，模型训练正常进行
+- **不影响精度**：不会降低模型检测精度或性能
+
+**解决方案**：
+1. **自动抑制**：训练脚本已配置自动抑制这些警告
+2. **手动修复**：使用PNG配置文件修复工具清理图像
+   ```bash
+   # 修复合成数据中的PNG图像
+   python src/data_generation/fix_png_profiles.py
+   ```
+
 ### 测试数据集标准化
 
 支持将人工标注的测试样本（LabelImg格式）转换为标准YOLO格式：
