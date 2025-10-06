@@ -118,6 +118,9 @@ train: /Users/bupt_absinth/Work/projects/qrcode_detect/data/synthetic/images/syn
 ```bash
 # 生成测试样本验证修复
 python src/data_generation/generate_test_samples.py
+
+# 修复现有标签文件的类别ID
+python src/data_generation/fix_label_class_ids.py
 ```
 
 #### PNG图像ICC配置文件警告
