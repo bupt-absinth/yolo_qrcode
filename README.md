@@ -98,6 +98,28 @@ pip install onnxruntime-silicon  # Mac M1优化版本
    - Mac M1芯片高性能推理（≤100ms）
    - 符合项目输出规范（JSON格式）
 
+### 常见问题解决
+
+#### 类别ID不匹配问题
+
+**问题描述**：
+```
+train: /Users/bupt_absinth/Work/projects/qrcode_detect/data/synthetic/images/synthetic_019664.png: ignoring corrupt image/label: Label class 2 exceeds dataset class count 1. Possible class labels are 0-0
+```
+
+**问题原因**：
+合成数据生成器为不同类型的二维码分配了不同的类别ID（0, 1, 2），但数据集配置文件只定义了一个类别。
+
+**解决方案**：
+1. 统一所有二维码类别ID为0（默认设置）
+2. 或更新数据集配置以支持多类别（nc: 3）
+
+**验证方法**：
+```bash
+# 生成测试样本验证修复
+python src/data_generation/generate_test_samples.py
+```
+
 ### 测试数据集标准化
 
 支持将人工标注的测试样本（LabelImg格式）转换为标准YOLO格式：
@@ -186,6 +208,9 @@ python src/data_generation/synthetic_data_generator.py
 
 # 将LabelImg格式测试数据转换为YOLO格式
 python src/data_generation/convert_swift_trail_to_yolo.py
+
+# 生成测试样本验证修复
+python src/data_generation/generate_test_samples.py
 ```
 
 ### 模型训练（Mac M1适配）
