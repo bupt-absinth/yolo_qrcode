@@ -15,14 +15,13 @@ def crop_image(image: Image.Image) -> Image.Image:
     
     # 计算裁剪边界
     # 上部裁剪1/10
-    m = 20
-    top_crop = height // m
+    top_crop = height // 10
     # 左侧裁剪1/10
-    left_crop = width // m
+    left_crop = width // 10
     # 右侧裁剪1/10
-    right_crop = width - (width // m)
+    right_crop = width - (width // 10)
     # 底部裁剪1/5
-    bottom_crop = height - (height // 6.2)
+    bottom_crop = height - (height // 5)
     
     # 执行裁剪
     cropped_image = image.crop((left_crop, top_crop, right_crop, bottom_crop))
