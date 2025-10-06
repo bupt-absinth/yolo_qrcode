@@ -136,4 +136,7 @@ Thumbs.db
 # Project specific
 data/synthetic/
 data/qr_codes/
+data/swift_trail/*.json
 *.pyc
+__pycache__/
+src/data_generation/__pycache__/
