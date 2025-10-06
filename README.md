@@ -243,6 +243,9 @@ python src/data_generation/generate_test_samples.py
 # 训练YOLOv9模型并导出适配Mac M1的格式
 python src/training/train_yolov9_mac.py
 
+# 快速训练验证（使用1000张图像快速验证训练流程）
+python src/training/train_yolov9_quick_test.py
+
 # 原始YOLO训练脚本
 python src/training/train_yolo.py
 ```
