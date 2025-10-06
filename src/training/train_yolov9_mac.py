@@ -8,8 +8,14 @@ import sys
 import yaml
 import torch
 import platform
+import warnings
 from ultralytics import YOLO
 from pathlib import Path
+
+# 抑制libpng警告
+warnings.filterwarnings("ignore", category=UserWarning, module="PIL")
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+os.environ["PYTHONWARNINGS"] = "ignore::UserWarning"
 
 
 class YOLOv9Trainer:
