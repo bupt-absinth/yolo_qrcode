@@ -1,0 +1,31 @@
+# 模型配置文件
+
+# YOLO模型配置
+yolo:
+  model_type: "yolov8"  # yolov8 or yolov9
+  model_size: "m"       # n, s, m, l, x
+  imgsz: 640            # 输入图像尺寸
+  epochs: 100           # 训练轮数
+  batch_size: 16        # 批次大小
+  learning_rate: 0.01   # 学习率
+
+# 数据集配置
+dataset:
+  train_path: "data/synthetic/train"
+  val_path: "data/test"
+  num_classes: 1
+  class_names: ["code"]
+
+# 增强配置
+augmentation:
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.5
+  mosaic: 1.0
+  mixup: 0.0
+
+# 推理配置
+inference:
+  conf_thres: 0.5       # 置信度阈值
+  iou_thres: 0.5        # IOU阈值
+  max_det: 300          # 最大检测数
