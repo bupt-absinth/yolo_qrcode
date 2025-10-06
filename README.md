@@ -20,6 +20,8 @@ qrcode_detect/
 │   ├── synthetic/             # 合成数据集 (50,000+张)
 │   │   ├── images/           # 合成图片
 │   │   └── labels/           # YOLO格式标签
+│   ├── swift_trail/          # 人工标注的测试样本 (LabelImg格式)
+│   ├── swift_trail_formatted/ # 标准化后的测试样本 (YOLO格式)
 │   └── test/                  # 真实测试集
 ├── models/
 │   ├── yolov8/               # YOLOv8模型
@@ -50,6 +52,22 @@ qrcode_detect/
    - 方形二维码（带Logo）
 
 ## 数据生成与增强功能
+
+### 测试数据集标准化
+
+支持将人工标注的测试样本（LabelImg格式）转换为标准YOLO格式：
+
+1. **格式转换**：
+   - 将LabelImg JSON格式转换为YOLO TXT格式
+   - 自动归一化坐标到0-1范围
+   - 统一类别ID（默认所有二维码类别ID为0）
+   - 保持图片文件不变，仅转换标注格式
+
+2. **目录结构**：
+   - 输入：`data/swift_trail/`（LabelImg格式）
+   - 输出：`data/swift_trail_formatted/`（YOLO格式）
+     - `images/`：图片文件
+     - `labels/`：YOLO格式标签文件
 
 ### 合成数据生成（工业级）
 
@@ -126,6 +144,9 @@ python src/data_generation/generate_industrial_qrcodes.py
 
 # 生成工业级合成训练数据（50,000个）
 python src/data_generation/synthetic_data_generator.py
+
+# 将LabelImg格式测试数据转换为YOLO格式
+python src/data_generation/convert_swift_trail_to_yolo.py
 
 # 仅生成方形二维码
 python src/data_generation/generate_and_enhance_miniprogram_codes.py
