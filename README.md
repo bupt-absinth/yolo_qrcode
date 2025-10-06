@@ -10,7 +10,8 @@ qrcode_detect/
 ├── requirements.txt
 ├── data/
 │   ├── backgrounds/           # 背景图库 (5000+张)
-│   ├── qr_codes/              # 二维码原图
+│   ├── qr_codes/              # 普通二维码原图
+│   ├── logos/                 # Logo图库
 │   ├── mini_program_codes/    # 小程序码原图
 │   ├── square_qr_codes/       # 方形二维码原图
 │   ├── enhanced_miniprogram_codes/  # 增强后的小程序码
@@ -48,6 +49,25 @@ qrcode_detect/
 
 ## 数据生成与增强功能
 
+### 普通二维码生成（工业级）
+
+支持生成大量定制化二维码，满足工业级训练需求：
+
+1. **基础生成**：
+   - 使用Python qrcode库生成标准QR码
+   - 随机化容错级别（L/M/Q/H）
+   - 随机化点阵/背景色（HSL/RGB颜色）
+
+2. **Logo嵌入**：
+   - 自动从Logo库中随机抽取Logo
+   - 根据容错级别智能确定Logo尺寸
+   - 精确粘贴到二维码中心区域
+
+3. **颜色/样式定制**：
+   - 随机生成HSL或RGB颜色
+   - 支持圆角点阵等样式调整
+   - 模拟真实截屏中的金色点阵效果
+
 ### 小程序码生成与增强
 - 使用微信API生成真实小程序码
 - 中心圆形区域直径为整张图片大小的一半
@@ -80,6 +100,9 @@ pip install -r requirements.txt
 ```bash
 # 生成并增强所有类型的码
 python src/data_generation/generate_and_enhance_miniprogram_codes.py
+
+# 生成工业级普通二维码（10,000个）
+python src/data_generation/generate_industrial_qrcodes.py
 
 # 仅生成方形二维码
 python src/data_generation/generate_and_enhance_miniprogram_codes.py
