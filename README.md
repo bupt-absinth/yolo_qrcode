@@ -51,7 +51,52 @@ qrcode_detect/
    - 微信小程序码
    - 方形二维码（带Logo）
 
+## 环境安装
+
+### 基础依赖
+
+```bash
+# 安装基础Python依赖
+pip install -r requirements.txt
+
+# 安装YOLOv8/v9相关依赖
+pip install ultralytics
+
+# Mac M1芯片额外依赖
+pip install coremltools
+pip install onnxruntime-silicon  # Mac M1优化版本
+```
+
+### 依赖说明
+
+- `ultralytics`: YOLOv8/v9模型训练和推理
+- `coremltools`: Core ML模型转换和推理（Mac M1优化）
+- `onnxruntime-silicon`: ONNX模型推理（Mac M1优化）
+- `torch`: PyTorch深度学习框架
+- `opencv-python`: 图像处理
+- `numpy`: 数值计算
+- `Pillow`: 图像处理
+
 ## 数据生成与增强功能
+
+### 模型训练与推理（Mac M1适配）
+
+支持在Mac M1芯片上进行高性能模型训练和推理：
+
+1. **模型训练**：
+   - 使用YOLOv9架构（基于YOLOv8实现）
+   - 支持MPS（Metal Performance Shaders）加速
+   - 自动适配Mac M1芯片优化
+
+2. **模型导出**：
+   - ONNX格式：跨平台兼容，支持Mac M1加速
+   - CoreML格式：原生Mac M1优化，最高性能
+   - PyTorch格式：原始模型格式
+
+3. **模型推理**：
+   - 支持多种模型格式
+   - Mac M1芯片高性能推理（≤100ms）
+   - 符合项目输出规范（JSON格式）
 
 ### 测试数据集标准化
 
@@ -125,12 +170,6 @@ qrcode_detect/
   - 底部裁剪1/5
 - 裁剪后图片存储在`croped_square_qr_codes`目录
 
-## 安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
 ## 使用说明
 
 ### 生成和增强二维码/小程序码
@@ -147,21 +186,64 @@ python src/data_generation/synthetic_data_generator.py
 
 # 将LabelImg格式测试数据转换为YOLO格式
 python src/data_generation/convert_swift_trail_to_yolo.py
-
-# 仅生成方形二维码
-python src/data_generation/generate_and_enhance_miniprogram_codes.py
-
-# 仅增强方形二维码
-python src/data_generation/enhance_square_qr_codes.py
-
-# 仅裁剪增强后的方形二维码
-python src/data_generation/crop_square_qr_codes.py
 ```
 
-## 模型训练
+### 模型训练（Mac M1适配）
 
-YOLOv8/v9模型训练脚本位于`src/training/`目录下。
+```bash
+# 训练YOLOv9模型并导出适配Mac M1的格式
+python src/training/train_yolov9_mac.py
 
-## 推理部署
+# 原始YOLO训练脚本
+python src/training/train_yolo.py
+```
 
-支持ONNX和Core ML格式，适用于Mac M1平台高性能推理。
+### 模型推理（Mac M1适配）
+
+```bash
+# 使用CoreML模型进行高性能推理（推荐）
+python src/inference/yolov9_inference_mac.py
+```
+
+## 模型性能指标
+
+- **mAP@50**：≥ 95%
+- **召回率**：≥ 98%
+- **定位精度mAP@75**：≥ 80%
+- **Mac M1平台推理延迟**：≤ 100ms
+
+## 输出格式规范
+
+模型输出严格遵循JSON格式规范：
+```json
+{
+  "code_count": 2,
+  "model_version": "yolov9-coreml",
+  "time_ms": 45.67,
+  "detections": [
+    {
+      "bbox": [100, 120, 200, 220],
+      "confidence": 0.987,
+      "class_id": 0,
+      "class_name": "qr_code"
+    }
+  ]
+}
+```
+
+## 部署说明
+
+### Mac M1部署优化
+
+1. **CoreML格式**（推荐）：
+   - 原生支持Mac M1芯片
+   - 最高性能和最低功耗
+   - 无需额外依赖
+
+2. **ONNX格式**：
+   - 跨平台兼容
+   - 使用onnxruntime-silicon获得M1优化
+
+3. **PyTorch格式**：
+   - 原始模型格式
+   - 支持MPS加速
