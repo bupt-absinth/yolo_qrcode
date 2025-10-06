@@ -158,11 +158,11 @@ class SyntheticDataGenerator:
             elif qr_type == "square_qr":
                 qr_file = random.choice(self.square_qr_files)
                 qr_path = os.path.join(self.square_qr_dir, qr_file)
-                class_id = 1  # 方形二维码类别ID
+                class_id = 0  # 方形二维码类别ID (修改为0)
             else:  # qr
                 qr_file = random.choice(self.qr_files)
                 qr_path = os.path.join(self.qr_dir, qr_file)
-                class_id = 2  # 普通二维码类别ID
+                class_id = 0  # 普通二维码类别ID (修改为0)
             
             # 打开二维码图片
             qr_image = Image.open(qr_path).convert('RGBA')

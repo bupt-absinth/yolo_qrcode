@@ -44,8 +44,8 @@ class YOLOv9Trainer:
             'path': os.path.abspath('.'),  # 当前目录为根目录
             'train': self.train_data_path,  # 训练数据路径
             'val': self.val_data_path,      # 验证数据路径
-            'nc': 1,                        # 类别数量
-            'names': ['qr_code']            # 类别名称
+            'nc': 3,                        # 类别数量 (修改为3)
+            'names': ['miniprogram_code', 'square_qr', 'qr_code']  # 类别名称 (添加具体类别名称)
         }
         
         yaml_path = "configs/yolov9_dataset.yaml"
