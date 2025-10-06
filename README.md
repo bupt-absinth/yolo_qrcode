@@ -13,11 +13,13 @@ qrcode_detect/
 │   ├── qr_codes/              # 普通二维码原图
 │   ├── logos/                 # Logo图库
 │   ├── mini_program_codes/    # 小程序码原图
-│   ├── square_qr_codes/       # 方形二维码原图
 │   ├── enhanced_miniprogram_codes/  # 增强后的小程序码
+│   ├── square_qr_codes/       # 方形二维码原图
 │   ├── enhanced_square_qr_codes/    # 增强后的方形二维码
 │   ├── croped_square_qr_codes/      # 裁剪后的方形二维码
-│   ├── synthetic/             # 合成数据集
+│   ├── synthetic/             # 合成数据集 (50,000+张)
+│   │   ├── images/           # 合成图片
+│   │   └── labels/           # YOLO格式标签
 │   └── test/                  # 真实测试集
 ├── models/
 │   ├── yolov8/               # YOLOv8模型
@@ -48,6 +50,24 @@ qrcode_detect/
    - 方形二维码（带Logo）
 
 ## 数据生成与增强功能
+
+### 合成数据生成（工业级）
+
+支持生成大量合成训练样本，满足工业级训练需求：
+
+1. **数据合成**：
+   - 将背景图与各种二维码图片合成
+   - 支持随机变换（旋转、缩放、亮度、对比度调整）
+   - 自动生成YOLO格式标签文件
+   - 支持三类目标检测：
+     - 类别0：小程序码
+     - 类别1：方形二维码
+     - 类别2：普通二维码
+
+2. **数据规模**：
+   - 100%自动化合成数据
+   - 包含至少50,000张合成样本
+   - 多样化的背景和二维码组合
 
 ### 普通二维码生成（工业级）
 
@@ -103,6 +123,9 @@ python src/data_generation/generate_and_enhance_miniprogram_codes.py
 
 # 生成工业级普通二维码（10,000个）
 python src/data_generation/generate_industrial_qrcodes.py
+
+# 生成工业级合成训练数据（50,000个）
+python src/data_generation/synthetic_data_generator.py
 
 # 仅生成方形二维码
 python src/data_generation/generate_and_enhance_miniprogram_codes.py
